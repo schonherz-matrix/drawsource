@@ -8,6 +8,7 @@
 #include <QColorDialog>
 #include <QHBoxLayout>
 #include <QGraphicsView>
+#include <QPushButton>
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -21,6 +22,7 @@ private:
 	QHBoxLayout* layout;
 	QColorDialog* colorDialog;
 	GridDrawer* gridDrawer;
+	QPushButton* fillButton;
     DrawSender* drawSender;
 };
 

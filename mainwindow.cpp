@@ -20,6 +20,9 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow{parent} {
     );
 	layout->addWidget(colorDialog);
 	
+	fillButton = new QPushButton("&Fill", centralWidget);
+	layout->addWidget(fillButton);
+	
 	gridDrawer = new GridDrawer{centralWidget, drawSender->getSourceConfiguration().width, drawSender->getSourceConfiguration().height, 20};
 	layout->addWidget(gridDrawer);
 
@@ -31,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow{parent} {
 	/* View -> Controller signals */
     connect(colorDialog, &QColorDialog::currentColorChanged, drawSender, &DrawSender::setColor);
 	connect(gridDrawer, &GridDrawer::clickEvent, drawSender, &DrawSender::changeCell);
+	connect(fillButton, &QPushButton::pressed, drawSender, &DrawSender::fillFrame);
 	
 	/* Controller -> View signals */
 	qRegisterMetaType<Frame>("Frame");
@@ -38,5 +42,6 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow{parent} {
 }
 
 MainWindow::~MainWindow(){
-
+	delete drawSender;
+	delete centralWidget;
 }

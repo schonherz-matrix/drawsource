@@ -27,6 +27,7 @@ class DrawSender: public QObject {
 	public slots:
 		void setColor(const QColor& color);
 		void changeCell(const QPoint& cell);
+		void fillFrame();
 	signals:
 		void frameChanged(Frame frame);
 };

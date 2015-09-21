@@ -8,11 +8,13 @@
 #include "matrix.h"
 #include "array2D.hpp"
 
+#include <iostream>
+
 DrawSender::DrawSender(): id_{0}, color_{QColor{0,0,0}} {
 	config_ = getConfiguration("Draw source");
 	frame_.pixels = Array2D<RGB>{config_.width, config_.height};
-	for (int x = 0; x < frame_.pixels.getWidth(); x++) {
-		for (int y = 0; y < frame_.pixels.getHeight(); y++) {
+	for (int x = 0; x < config_.width; x++) {
+		for (int y = 0; y < config_.height; y++) {
 			frame_.pixels(x,y) = RGB{0,0,0};
 		}
 	}
@@ -37,6 +39,18 @@ void DrawSender::setColor(const QColor& color) {
 void DrawSender::changeCell(const QPoint& cell) {
 	m_.lock();
 	frame_.pixels(cell.x(), cell.y()) = RGB{color_.red(), color_.green(), color_.blue()};
+	m_.unlock();
+	emit frameChanged(frame_);
+}
+
+void DrawSender::fillFrame() {
+	m_.lock();
+	RGB rgb = RGB{color_.red(), color_.green(), color_.blue()};
+	for (int x = 0; x < config_.width; x++) {
+		for (int y = 0; y < config_.height; y++) {
+			frame_.pixels(x,y) = rgb;
+		}
+	}
 	m_.unlock();
 	emit frameChanged(frame_);
 }
