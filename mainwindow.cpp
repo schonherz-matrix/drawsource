@@ -43,5 +43,4 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow{parent} {
 
 MainWindow::~MainWindow(){
 	delete drawSender;
-	delete centralWidget;
 }
