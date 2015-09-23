@@ -1,11 +1,12 @@
 #include "mainwindow.h"
 #include <QMainWindow>
 #include <QColorDialog>
+#include <QCoreApplication>
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow{parent} {
 
 	/* Initalize members */
-	drawSender = new DrawSender{};
+	drawSender = new DrawSender{QCoreApplication::arguments().at(1).toStdString()};
 	
 	centralWidget = new QGraphicsView{this};
 	

@@ -1,12 +1,12 @@
 #ifndef GRID_DRAWER_H_INCLUDED
 #define GRID_DRAWER_H_INCLUDED
 
+#include "interface/frame.h"
 #include <QBrush>
 #include <QPen>
 #include <QPixmap>
 #include <QWidget>
 #include <QMouseEvent>
-#include "matrix.h"
 
 class GridDrawer: public QWidget {
 	Q_OBJECT

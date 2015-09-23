@@ -1,14 +1,13 @@
 #include "griddrawer.h"
+#include "core/color.h"
 #include <QPainter>
 #include <QDebug>
 
-#include "rgb.h"
-
 GridDrawer::GridDrawer(QWidget* parent, int x, int y, int windowSize): QWidget{parent}, x_{x}, y_{y}, windowSize_{windowSize} {
-	frame_.pixels = Array2D<RGB>{x_, y_};
+	frame_.pixels = Array2D<Color>{x_, y_};
 	for (int x = 0; x < frame_.pixels.getWidth(); x++) {
 		for (int y = 0; y < frame_.pixels.getHeight(); y++) {
-			frame_.pixels(x,y) = RGB{0, 0, 0};
+			frame_.pixels(x,y) = Color{0, 0, 0};
 		}
 	}
 	setMouseTracking(true);

@@ -5,10 +5,11 @@
 TEMPLATE = app
 TARGET = DrawSource
 QT += core gui widgets
-INCLUDEPATH += .
+INCLUDEPATH += . ./sw-common
 QMAKE_CXXFLAGS += -std=c++11 -Wall -pedantic
 QMAKE_LFLAGS += -lm
 
 # Input
-HEADERS += drawsender.h mainwindow.h griddrawer.h timer.h matrix.h rpc.h rgb.h array2D.hpp
-SOURCES += main.cpp drawsender.cpp mainwindow.cpp griddrawer.cpp timer.cpp rpc.cpp
+HEADERS += drawsender.h mainwindow.h griddrawer.h timer.h
+SOURCES += main.cpp drawsender.cpp mainwindow.cpp griddrawer.cpp timer.cpp
+LIBS += sw-common/build/lib/libmatrix_sw-common.a
