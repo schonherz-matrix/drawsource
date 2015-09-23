@@ -11,7 +11,7 @@ DrawSender::DrawSender(const std::string& socket_name): id_{0}, color_{QColor{0,
 	socket_->readTimeout(1000);
 	socket_->writeTimeout(1000);
 	pipe_ = std::unique_ptr<PipeInterpreter<DrawSender, DaemonSourceInterface>>{new PipeInterpreter<DrawSender, DaemonSourceInterface>{this, socket_.release()}};
-	config_ = pipe_->getSourceConfiguration("Color source");
+	config_ = pipe_->getSourceConfiguration("Draw source");
 	frame_.pixels = Array2D<Color>{config_.width, config_.height};
 	for (int x = 0; x < config_.width; x++) {
 		for (int y = 0; y < config_.height; y++) {
