@@ -1,0 +1,3 @@
+[submodule "sw-common"]
+	path = sw-common
+	url = https://git.sch.bme.hu/matrix-group/sw-common.git
