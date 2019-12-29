@@ -1,28 +1,45 @@
 #include "drawsender.h"
-#include <QDebug>
-#include <QPoint>
-#include <cmath>
+#include "ui_drawsender.h"
 
-DrawSender::DrawSender(QObject* parent)
-    : QObject(parent),
-      color_{QColor{0, 0, 0}},
-      frame_(32, 26, QImage::Format_RGB888),
-      transmitter_(this) {
-  frame_.fill(Qt::black);
+DrawSender::DrawSender(QWidget* parent,
+                       std::shared_ptr<MuebTransmitter> transmitter)
+    : QWidget(parent), ui(new Ui::DrawSender) {
+  if (!transmitter) m_transmitter = std::make_shared<MuebTransmitter>(this);
+  setWindowFlags(Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint |
+                 Qt::MSWindowsFixedSizeDialogHint);
+  m_frame.fill(Qt::black);
+
+  ui->setupUi(this);
+  ui->grid->setFrame(&m_frame);
+  ui->colorDialog->setWindowFlags(Qt::Widget);
+  ui->colorDialog->setOptions(QColorDialog::DontUseNativeDialog |
+                              QColorDialog::NoButtons);
+
+  adjustSize();
+  setFixedSize(size());
+
+  connect(ui->colorDialog, &QColorDialog::currentColorChanged, this,
+          &DrawSender::setColor);
+  connect(ui->grid, &GridDrawer::clickEvent, this, &DrawSender::changeCell);
 }
 
-void DrawSender::setColor(const QColor& color) { color_ = color; }
+void DrawSender::setColor(const QColor& color) { m_color = color; }
 
 void DrawSender::changeCell(const QPoint& cell) {
   int x = cell.x(), y = cell.y();
-  if (x < 0 || x >= 32 || y < 0 || y >= 26) return;
-  frame_.setPixelColor(x, y, color_);
-  transmitter_.sendFrame(frame_);
-  emit frameChanged(frame_);
+  if (x < 0 || x >= libmueb::defaults::width || y < 0 ||
+      y >= libmueb::defaults::width)
+    return;
+
+  m_frame.setPixelColor(x, y, m_color);
+  m_transmitter->sendFrame(m_frame);
+
+  ui->grid->update();
 }
 
 void DrawSender::fillFrame() {
-  frame_.fill(color_);
-  transmitter_.sendFrame(frame_);
-  emit frameChanged(frame_);
+  m_frame.fill(m_color);
+  m_transmitter->sendFrame(m_frame);
+
+  ui->grid->update();
 }

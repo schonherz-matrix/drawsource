@@ -1,5 +1,5 @@
-#ifndef GRID_DRAWER_H_INCLUDED
-#define GRID_DRAWER_H_INCLUDED
+#ifndef GRID_DRAWER_H
+#define GRID_DRAWER_H
 
 #include <QBrush>
 #include <QImage>
@@ -11,24 +11,25 @@
 class GridDrawer : public QWidget {
   Q_OBJECT
 
- protected:
-  void paintEvent(QPaintEvent* event) Q_DECL_OVERRIDE;
-  void mouseMoveEvent(QMouseEvent* event) Q_DECL_OVERRIDE;
-
  public:
-  GridDrawer(QWidget* parent = nullptr, int x = 10, int y = 0,
-             int windowSize = 10);
-  QSize minimumSizeHint() const Q_DECL_OVERRIDE;
-  QSize sizeHint() const Q_DECL_OVERRIDE;
- public slots:
-  void setFrame(QImage frame);
+  explicit GridDrawer(QWidget* parent = nullptr);
+  void setFrame(QImage* frame);
+
+  // QWidget interface
+  QSize sizeHint() const override;
+
+ protected:
+  void paintEvent(QPaintEvent* event) override;
+  void mousePressEvent(QMouseEvent* event) override;
+  void mouseMoveEvent(QMouseEvent* event) override;
+
  signals:
   void clickEvent(const QPoint&);
 
  private:
-  QImage frame_;
-  int x_, y_;
-  int windowSize_;
+  QImage* m_frame{nullptr};
+  int m_windowSize = 20;
+
   QPoint screenToGrid(const QPoint&);
 };
 

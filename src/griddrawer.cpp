@@ -1,47 +1,51 @@
 #include "griddrawer.h"
-#include <QDebug>
+
 #include <QPainter>
+#include "libmueb_global.h"
 
-GridDrawer::GridDrawer(QWidget* parent, int x, int y, int windowSize)
-    : QWidget{parent},
-      x_{x},
-      y_{y},
-      windowSize_{windowSize},
-      frame_(32, 26, QImage::Format_RGB888) {
-  frame_.fill(Qt::black);
+GridDrawer::GridDrawer(QWidget* parent) : QWidget{parent} {
   setMouseTracking(true);
+
+  setFixedSize(libmueb::defaults::width * m_windowSize + 1,
+               libmueb::defaults::height * m_windowSize + 1);
 }
 
-QSize GridDrawer::minimumSizeHint() const {
-  return QSize{x_ * windowSize_, y_ * windowSize_};
-}
+QSize GridDrawer::sizeHint() const { return size(); }
 
-QSize GridDrawer::sizeHint() const {
-  return QSize{x_ * windowSize_, y_ * windowSize_};
-}
-
-void GridDrawer::setFrame(QImage frame) {
-  frame_ = frame;
+void GridDrawer::setFrame(QImage* frame) {
+  m_frame = frame;
   update();
 }
 
 void GridDrawer::paintEvent(QPaintEvent*) {
   QPainter painter{this};
-  for (int x = 0; x < frame_.width(); x++) {
-    for (int y = 0; y < frame_.height(); y++) {
-      painter.setBrush(frame_.pixelColor(x, y));
-      painter.drawRect(windowSize_ * x, windowSize_ * y, windowSize_,
-                       windowSize_);
+
+  if (m_frame) {
+    painter.setPen(QPen(Qt::black, 0));
+
+    for (int y = 0; y < m_frame->height(); y++) {
+      for (int x = 0; x < m_frame->width(); x++) {
+        painter.setBrush(m_frame->pixelColor(x, y));
+        painter.drawRect(m_windowSize * x, m_windowSize * y, m_windowSize,
+                         m_windowSize);
+      }
     }
   }
 }
 
 QPoint GridDrawer::screenToGrid(const QPoint& p) {
-  return QPoint{p.x() / windowSize_, p.y() / windowSize_};
+  return QPoint{p.x() / m_windowSize, p.y() / m_windowSize};
 }
 
-void GridDrawer::mouseMoveEvent(QMouseEvent* event) {
+void GridDrawer::mousePressEvent(QMouseEvent* event) {
+  QWidget::mousePressEvent(event);
+
   if (event->buttons() & Qt::LeftButton) {
     emit clickEvent(screenToGrid(event->pos()));
   }
+}
+
+void GridDrawer::mouseMoveEvent(QMouseEvent* event) {
+  QWidget::mouseMoveEvent(event);
+  mousePressEvent(event);
 }

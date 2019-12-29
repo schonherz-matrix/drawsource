@@ -19,14 +19,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 HEADERS += \
     src/drawsender.h \
-    src/griddrawer.h \
-    src/mainwindow.h
+    src/griddrawer.h
 
 SOURCES += \
     src/drawsender.cpp \
     src/griddrawer.cpp \
-    src/main.cpp \
-    src/mainwindow.cpp
+    src/main.cpp
+
+FORMS += \
+    src/drawsender.ui
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../libmueb/release/ -lmueb
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../libmueb/debug/ -lmueb
@@ -34,5 +35,3 @@ else:unix: LIBS += -L$$OUT_PWD/../libmueb/ -lmueb
 
 INCLUDEPATH += $$PWD/../libmueb/include/libmueb
 DEPENDPATH += $$PWD/../libmueb/include/libmueb
-
-
