@@ -39,9 +39,10 @@ QPoint GridDrawer::screenToGrid(const QPoint& p) {
 
 void GridDrawer::mousePressEvent(QMouseEvent* event) {
   QWidget::mousePressEvent(event);
+  auto pos = event->pos();
 
-  if (event->buttons() & Qt::LeftButton) {
-    emit clickEvent(screenToGrid(event->pos()));
+  if (event->buttons() & Qt::LeftButton && rect().contains(pos, true)) {
+    emit clickEvent(screenToGrid(pos));
   }
 }
 

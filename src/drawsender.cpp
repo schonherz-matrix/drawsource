@@ -26,12 +26,7 @@ DrawSender::DrawSender(QWidget* parent,
 void DrawSender::setColor(const QColor& color) { m_color = color; }
 
 void DrawSender::changeCell(const QPoint& cell) {
-  int x = cell.x(), y = cell.y();
-  if (x < 0 || x >= libmueb::defaults::width || y < 0 ||
-      y >= libmueb::defaults::width)
-    return;
-
-  m_frame.setPixelColor(x, y, m_color);
+  m_frame.setPixelColor(cell.x(), cell.y(), m_color);
   m_transmitter->sendFrame(m_frame);
 
   ui->grid->update();
