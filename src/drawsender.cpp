@@ -23,6 +23,8 @@ DrawSender::DrawSender(QWidget* parent,
   connect(ui->grid, &GridDrawer::clickEvent, this, &DrawSender::changeCell);
 }
 
+DrawSender::~DrawSender() { delete ui; }
+
 void DrawSender::setColor(const QColor& color) { m_color = color; }
 
 void DrawSender::changeCell(const QPoint& cell) {

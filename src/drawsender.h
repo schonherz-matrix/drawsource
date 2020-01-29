@@ -15,6 +15,7 @@ class DrawSender : public QWidget {
  public:
   explicit DrawSender(QWidget* parent = nullptr,
                       std::shared_ptr<MuebTransmitter> transmitter = nullptr);
+  ~DrawSender();
 
  public slots:
   void setColor(const QColor& color);
