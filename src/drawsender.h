@@ -2,7 +2,7 @@
 #define DRAW_SENDER_H
 
 #include <QWidget>
-#include <memory>
+
 #include "muebtransmitter.h"
 
 namespace Ui {
@@ -13,8 +13,7 @@ class DrawSender : public QWidget {
   Q_OBJECT
 
  public:
-  explicit DrawSender(QWidget* parent = nullptr,
-                      std::shared_ptr<MuebTransmitter> transmitter = nullptr);
+  explicit DrawSender(QWidget* parent = nullptr);
   ~DrawSender();
 
  public slots:
@@ -25,7 +24,7 @@ class DrawSender : public QWidget {
  private:
   QImage m_frame{libmueb::defaults::frame};
   QColor m_color{Qt::black};
-  std::shared_ptr<MuebTransmitter> m_transmitter{nullptr};
+  MuebTransmitter& m_transmitter;
   Ui::DrawSender* ui{nullptr};
 };
 
