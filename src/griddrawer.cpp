@@ -1,6 +1,7 @@
 #include "griddrawer.h"
 
 #include <QPainter>
+
 #include "libmueb_global.h"
 
 GridDrawer::GridDrawer(QWidget* parent) : QWidget{parent} {
@@ -21,7 +22,7 @@ void GridDrawer::paintEvent(QPaintEvent*) {
   QPainter painter{this};
 
   if (m_frame) {
-    painter.setPen(QPen(Qt::black, 0));
+    painter.setPen(QPen(Qt::lightGray, 0));
 
     for (int y = 0; y < m_frame->height(); y++) {
       for (int x = 0; x < m_frame->width(); x++) {
