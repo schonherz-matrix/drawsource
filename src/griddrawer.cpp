@@ -2,7 +2,7 @@
 
 #include <QPainter>
 
-#include "libmueb_global.h"
+#include "libmuebconfig.h"
 
 GridDrawer::GridDrawer(QWidget* parent) : QWidget{parent} {
   setMouseTracking(true);
