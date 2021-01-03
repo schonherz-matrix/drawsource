@@ -27,8 +27,8 @@ if(NOT DEFINED MATRIX_SIMPLE)
 endif()
 
 add_executable(
-  ${PROJECT_NAME} src/drawsender.cpp src/drawsender.h src/drawsender.ui
-                  src/griddrawer.cpp src/griddrawer.h src/main.cpp)
+  ${PROJECT_NAME} WIN32 src/drawsender.cpp src/drawsender.h src/drawsender.ui
+                        src/griddrawer.cpp src/griddrawer.h src/main.cpp)
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Widgets
                                               libmueb::muebtransmitter)
 
