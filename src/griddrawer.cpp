@@ -2,13 +2,14 @@
 
 #include <QPainter>
 
-#include "libmuebconfig.h"
+#include "muebtransmitter.h"
 
 GridDrawer::GridDrawer(QWidget* parent) : QWidget{parent} {
   setMouseTracking(true);
 
-  setFixedSize(libmueb::defaults::width * m_windowSize + 1,
-               libmueb::defaults::height * m_windowSize + 1);
+  setFixedSize(
+      libmueb::MuebTransmitter::Instance().width() * m_windowSize + 1,
+      libmueb::MuebTransmitter::Instance().height() * m_windowSize + 1);
 }
 
 QSize GridDrawer::sizeHint() const { return size(); }

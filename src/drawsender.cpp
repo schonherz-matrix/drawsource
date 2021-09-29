@@ -4,8 +4,9 @@
 
 DrawSender::DrawSender(QWidget* parent)
     : QWidget(parent),
-      m_transmitter(MuebTransmitter::getInstance()),
+      transmitter_(libmueb::MuebTransmitter::Instance()),
       ui(new Ui::DrawSender) {
+  m_frame = transmitter_.frame();
   setWindowFlags(Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint |
                  Qt::MSWindowsFixedSizeDialogHint);
   m_frame.fill(Qt::black);
@@ -30,13 +31,13 @@ void DrawSender::setColor(const QColor& color) { m_color = color; }
 
 void DrawSender::changeCell(const QPoint& cell) {
   m_frame.setPixelColor(cell.x(), cell.y(), m_color);
-  m_transmitter.sendFrame(m_frame);
+  transmitter_.SendFrame(m_frame);
 
   ui->grid->update();
 }
 
 void DrawSender::fillFrame() {
   m_frame.fill(m_color);
-  m_transmitter.sendFrame(m_frame);
+  transmitter_.SendFrame(m_frame);
   ui->grid->update();
 }

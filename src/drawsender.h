@@ -22,9 +22,9 @@ class DrawSender : public QWidget {
   void fillFrame();
 
  private:
-  QImage m_frame{libmueb::defaults::frame};
+  QImage m_frame;
   QColor m_color{Qt::black};
-  MuebTransmitter& m_transmitter;
+  libmueb::MuebTransmitter& transmitter_;
   Ui::DrawSender* ui{nullptr};
 };
 
